@@ -1,4 +1,5 @@
 import discord
+import random
 import os
 
 client = discord.Client()
@@ -13,22 +14,19 @@ async def on_ready():
     await client.change_presence(status=discord.Status.online, activity=None)
     history = await client.get_channel(article2ID).history().flatten()
     for article in history:
-        contentID = str(article.content).split('\n')[0]
-        recommendedLst.append(contentID)
+        if article.embeds:
+            recommendedLst.append(article.embeds[0].footer.text)
 
 @client.event
 async def on_reaction_add(reaction, user):
     if reaction.message.channel.id == article1ID:
-        print(recommendedLst)
-
         if str(reaction.message.id) in recommendedLst:
             return None
         recommendedLst.append(str(reaction.message.id))
-        channel = client.get_channel(article2ID)
-        mesg = str(reaction.message.id) + '\n'
-        mesg += 'Author : ' + str(reaction.message.author) + '\n'
-        mesg += 'Recommended by : ' + str(user) + '\n'
-        mesg += 'Content : ' + str(reaction.message.content) + '\n'
-        await channel.send(mesg)
+        embed = discord.Embed(title=reaction.message.content, colour=random.randint(0, 0XFFFFFF))
+        embed.set_author(name=reaction.message.author.name, icon_url=reaction.message.author.avatar_url)
+        embed.add_field(name='Recommended by', value=user.name, inline=False)
+        embed.set_footer(text=str(reaction.message.id))
+        await client.get_channel(article2ID).send(embed=embed)
 
 client.run(TOKEN)
