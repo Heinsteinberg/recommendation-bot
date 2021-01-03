@@ -11,7 +11,7 @@ recommendedLst = []
 async def on_ready():
     print('Initiating \'%s\'' % client.user.name)
     # await client.change_presence(status=discord.Status.online, activity=None)
-    await client.change_presence(activity=discord.Game(name='Running 24/7'))
+    await client.change_presence(activity=discord.Status(name='Running 24/7'))
     history = await client.get_channel(article2ID).history().flatten()
     for article in history:
         contentID = str(article.content).split('\n')[0]
