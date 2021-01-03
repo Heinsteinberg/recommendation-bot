@@ -1,7 +1,8 @@
 import discord
+import os
 
 client = discord.Client()
-TOKEN = 'Nzk0OTA4MDI2ODcyMTM1Njgy.X_Bpyg.pm62hBytjqa5_9UFqxlyzGIe58I'
+TOKEN = os.environ.get('TOKEN')
 article1ID = 736438894551236710 # 전체글 channel id
 article2ID = 794911922889031720 # 개념글 channel id
 recommendedLst = []
