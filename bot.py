@@ -1,5 +1,4 @@
 import discord
-import random
 import os
 
 client = discord.Client()
@@ -12,6 +11,7 @@ recommendedLst = []
 async def on_ready():
     print('Initiating \'%s\'' % client.user.name)
     await client.change_presence(status=discord.Status.online, activity=None)
+    await client.user.edit(username='개추봇🎭')
     history = await client.get_channel(article2ID).history().flatten()
     for article in history:
         if article.embeds:
